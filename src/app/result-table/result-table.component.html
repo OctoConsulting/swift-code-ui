@@ -1,0 +1,19 @@
+    
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th class="title" *ngFor="let title of displayedColumns"> {{title}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of dataSource">
+                <th>{{item.name}}</th>
+                <th>{{item.duns}}</th>
+                <th>{{item.far}}</th>
+                <th>{{item.answerID}}</th>
+                <th>{{item.response}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
