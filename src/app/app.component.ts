@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ResultTableComponent } from './result-table/result-table.component';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +7,7 @@ import { ResultTableComponent } from './result-table/result-table.component';
 })
 export class AppComponent {
 
-  constructor(private resultTable : ResultTableComponent) 
+  constructor() 
   { }
 
 

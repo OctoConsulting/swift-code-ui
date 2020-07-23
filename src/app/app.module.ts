@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-import { ResultTableComponent } from './result-table/result-table.component';
 import { FormComponent } from './form/form.component';
 import { MatTableModule } from '@angular/material/table'  
 
@@ -18,7 +17,6 @@ import { MatTableModule } from '@angular/material/table'
   declarations: [
     AppComponent,
     FormComponent,
-    ResultTableComponent
   ],
   imports: [
     BrowserModule,
