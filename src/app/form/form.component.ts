@@ -226,28 +226,26 @@ export class FormComponent implements OnInit {
 
   downloadClicked(){
     this.formService.downloadAll().subscribe(res => {
-      let blob = new Blob([res], { type: 'text/csv' });
-      var url = window.URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url;
-      a.download = 'ETPHoldReview.csv';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      this.download(res, 'allEntities.csv');
     });
   }
 
   downloadDateClicked(){
     this.formService.downloadDate(this.model.date).subscribe(res => {
-      let blob = new Blob([res], { type: 'text/csv' });
+      console.log(res)
+      this.download(res, 'entitiesByDate.csv')
+    });
+  }
+
+  download(res: any, title: string){
+    let blob = new Blob([res], { type: 'text/csv' });
       var url = window.URL.createObjectURL(blob);
       var a = document.createElement("a");
       a.href = url;
-      a.download = 'ETPHoldReview.csv';
+      a.download = title;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    });
   }
 
   // convertToEntity(res: any){
