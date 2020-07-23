@@ -89,6 +89,14 @@
     margin: 82px auto 32px;
   }
 
+  .divider{
+    border:1px solid #FFFAF0;
+    background-color: #FFFAF0;
+    border-radius: 25px;
+    height: 90%;
+    width: 90%;
+  }
+
   a,
   a:visited,
   a:hover {

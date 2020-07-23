@@ -2,26 +2,22 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <img/>
-  <span>Welcome</span>
+  <span>SwiftCode</span>
     <div class="spacer"></div>
-
 </div>
 
 <div class="content">
   <div class="page-card">
-    <div class="form">
-      <app-form></app-form>
+    <div class="divider">
+      <div class="form">
+        <app-form></app-form>
+      </div>
     </div>
   
-    <app-result-table></app-result-table>
+    <div class="divider">
+      <app-result-table></app-result-table>
+    </div>
   </div>
 </div>
-<!-- <div class="page-card">
-  <div class="form">
-    <app-form></app-form>
-  </div>
-
-  <app-result-table></app-result-table>
-</div> -->
 
 <router-outlet></router-outlet>
