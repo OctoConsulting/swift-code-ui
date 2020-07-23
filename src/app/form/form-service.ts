@@ -10,7 +10,6 @@ export class FormService{
     }
 
     retrieveResults(params : any): Observable<any>{
-        console.log(params)
         const options = {
             params: params
         }

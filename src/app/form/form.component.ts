@@ -1,7 +1,9 @@
+import { Entity, FarDFarList } from './../entity.model';
 import { FormService } from './form-service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
@@ -10,6 +12,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 })
 export class FormComponent implements OnInit {
   
+  entityList : Entity[];
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {
@@ -182,7 +185,6 @@ export class FormComponent implements OnInit {
   }
   
   onSubmit(){
-    console.log(this.model);
     let params = 
     {
       searchText: '',
@@ -205,9 +207,26 @@ export class FormComponent implements OnInit {
         params.type = 'fardfar';
         this.formService.retrieveResults(params);
      } 
-     this.formService.retrieveResults(params).subscribe(v => {console.log(v)});
+     this.formService.retrieveResults(params).subscribe(res => {
+       this.convertToEntity(res);
+     });
+  }
 
-
-
+  convertToEntity(res: any){
+    let entityList: Entity[] = [];
+    for (var r of res) {
+      let entity: Entity = new Entity;
+      entity.duns = r.duns;
+      entity.name = r.legal_business_name;
+      let farList : FarDFarList[] = [];
+      for(var far of r.farDfarAnswerDataList){
+        let newFar : FarDFarList = new FarDFarList;
+        newFar.answerId = far.answer_id;
+        newFar.fardfarCode = far.far_dfar_code;
+        farList.push(newFar);
+      }
+      entity.farDfarList = farList;
+      entityList.push(entity);
+    }
   }
 }
