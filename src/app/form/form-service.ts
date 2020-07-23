@@ -35,4 +35,9 @@ export class FormService{
         return this.http.get(url, {params: params, responseType: 'blob' });
     }
 
+    downloadSearched(params: any): Observable<Blob>{
+        const url = 'swiftcode/v1/entity/get/csvdownload';
+        return this.http.get(url, {params: params, responseType: 'blob' });
+    }
+
 }

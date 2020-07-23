@@ -197,6 +197,17 @@ export class FormComponent implements OnInit {
   }
   
   onSubmit(){
+    let params = this.getParams();
+
+     this.formService.retrieveResults(params).subscribe(res => {
+       this.entityList = res;
+       if(res.length > 0){
+         this.submitClicked = true;
+       }
+     });
+  }
+
+  getParams(){
     let params = 
     {
       searchText: '',
@@ -211,12 +222,8 @@ export class FormComponent implements OnInit {
         params.type = 'fardfar';
         this.formService.retrieveResults(params);
      } 
-     this.formService.retrieveResults(params).subscribe(res => {
-       this.entityList = res;
-       if(res.length > 0){
-         this.submitClicked = true;
-       }
-     });
+
+     return params;
   }
 
   resetClick(){
@@ -227,6 +234,13 @@ export class FormComponent implements OnInit {
   downloadClicked(){
     this.formService.downloadAll().subscribe(res => {
       this.download(res, 'allEntities.csv');
+    });
+  }
+
+  downloadSearchClicked(){
+    let params = this.getParams();
+    this.formService.downloadSearched(params).subscribe(res => {
+      this.download(res, 'searchedEntities.csv');
     });
   }
 

@@ -4,7 +4,7 @@
     <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
 
     <button class="form-button" type="submit" [disabled]="!form.valid">
-        Submit
+        Search
     </button>
     
     <button type="reset" (click)="resetClick()">
@@ -17,6 +17,10 @@
 
     <button class="form-button" (click)="downloadDateClicked()" [disabled]="!dateClicked">
         Download Entites Based On Date
+    </button>
+
+    <button *ngIf="submitClicked" class="form-button" (click)="downloadSearchClicked()">
+        Download Searched Entities
     </button>
 </form>
 
