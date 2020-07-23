@@ -1,9 +1,9 @@
 
-<form  class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form  class="form" [formGroup]="form">
     <p style="font-weight:500;">Search By:</p>
     <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
 
-    <button class="form-button" type="submit" [disabled]="!form.valid">
+    <button class="form-button" type="submit" [disabled]="!form.valid" (click)="onSearch()">
         Search
     </button>
     

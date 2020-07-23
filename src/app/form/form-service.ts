@@ -17,6 +17,14 @@ export class FormService{
         return this.http.get(url, options);
     }
 
+    retrieveResultsV2(params : any): Observable<any>{
+        const options = {
+            params: params
+        }
+        const url = 'swiftcode/v1/entity/getdata';
+        return this.http.get(url, options);
+    }
+
     retrievefardfar(): Observable<any>{
         const url = 'swiftcode/v1/fetch/fardfarlist';
         return this.http.get(url);

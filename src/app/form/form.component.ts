@@ -12,8 +12,6 @@ import { map } from 'rxjs/operators';
 })
 export class FormComponent implements OnInit {
   
-  // @Output() entityList : EventEmitter<String[]> = new EventEmitter<String[]>();
-
   displayedColumns: string[] = ['Name', 'DUNS', 'FAR/DFAR Code', 'Answer ID', 'Answer Section'];
   entityList;
   submitClicked;
@@ -38,9 +36,7 @@ export class FormComponent implements OnInit {
               {label: "Single DUNS", value: 1},
           ],
           click: (field) => {
-            // this.form.get('dunsRangeRadio').reset(null);
             this.form.get('farRadio').reset(null);
-            // this.form.get('answerRadio').reset(null);
           }
         },
       },
@@ -60,68 +56,48 @@ export class FormComponent implements OnInit {
         }
       },
 
-      // {
-      //   type: "radio",
-      //   key: "dunsRangeRadio",
-      //   templateOptions: {
-      //     options: [
-      //         {label: "Multiple DUNS", value: 2},
-      //     ],
-      //     click: (field) => {
-      //       this.form.get('dunsRadio').reset(null);
-      //       this.form.get('farRadio').reset(null);
-      //       this.form.get('answerRadio').reset(null);
-      //     }
-      //   },
-      // },
-      // {
-      //   className: 'custom-input',
-      //   type: "input",
-      //   key: "dunsRangeInput",
-      //   templateOptions: {
-      //     label: "Enter the DUNS you are searching for (Comma separated):",
-      //     placeholder: "999999999, 888888888",
-      //     attributes: {
-      //       style: this.options.formState.size
-      //     }
-      //   },
-      //   expressionProperties:{
-      //     "hideExpression": "!model.dunsRangeRadio",
-      //     "templateOptions.required": "model.dunsRangeRadio"
-      //   }
-      // },
-
-
-
-      // {
-      //   type: "radio",
-      //   key: "answerRadio",
-      //   templateOptions: {
-      //     options: [
-      //         {label: "Answer ID", value: 4},
-      //     ],
-      //     click: (field) => {
-      //       this.form.get('dunsRadio').reset(null);
-      //       // this.form.get('dunsRangeRadio').reset(null);
-      //       this.form.get('farRadio').reset(null);
-      //     }
-      //   },
-      // },
-      // {
-      //   className: 'custom-input',
-      //   type: "input",
-      //   key: "answerInput",
-      //   templateOptions: {
-      //     label: "Enter the answer ID you are searching for:",
-      //     attributes: {
-      //       style: this.options.formState.size
-      //     }
-      //   },
-      //   expressionProperties:{
-      //     "hideExpression": "!model.answerRadio",
-      //     "templateOptions.required": "model.answerRadio"
-      //   }
-      // }
+      {
+        type: "radio",
+        key: "farRadio",
+        templateOptions: {
+          options: [
+              {label: "FAR / DFAR", value: 3},
+          ],
+          click: (field) => {
+            this.form.get('dunsRadio').reset(null);
+          }
+        },
+      },
+      {
+        className: 'custom-input',
+        type: "input",
+        key: "farSelect",
+        templateOptions: {
+          label: "Enter the FAR / DFAR you are searching for:",
+          // options: [],
+          attributes: {
+            style: this.options.formState.size
+          },
+        },
+        expressionProperties:{
+          "hideExpression": "!model.farRadio",
+          "templateOptions.required": "model.farRadio",
+        },
+        lifecycle:{
+          onInit: (field, form)=>{
+            this.formService.retrievefardfar().subscribe(res => {
+              let list = []
+              for(var far of res.FAR){
+                list.push(far)
+              }
+              for(var far of res.DFAR){
+                list.push(far)
+              }
+              form.templateOptions.options = list;
+            });
+          }
+        }
+      }
     ] 
   },
   {
@@ -145,60 +121,64 @@ export class FormComponent implements OnInit {
   constructor(private formService: FormService) { }
 
   ngOnInit(): void {
-    const farRadio = {
-      type: "radio",
-      key: "farRadio",
-      templateOptions: {
-        options: [
-            {label: "FAR / DFAR", value: 3},
-        ],
-        click: (field) => {
-          this.form.get('dunsRadio').reset(null);
-          // this.form.get('dunsRangeRadio').reset(null);
-          // this.form.get('answerRadio').reset(null);
-        }
-      },
-    };
+    // const farRadio = {
+    //   type: "radio",
+    //   key: "farRadio",
+    //   templateOptions: {
+    //     options: [
+    //         {label: "FAR / DFAR", value: 3},
+    //     ],
+    //     click: (field) => {
+    //       this.form.get('dunsRadio').reset(null);
+    //     }
+    //   },
+    // };
 
-    const farSelect=
-    {
-      className: 'custom-input',
-      type: "select",
-      key: "farSelect",
-      templateOptions: {
-        label: "Select the exact FAR / DFAR you are searching for:",
-        options: [],
-        attributes: {
-          style: this.options.formState.size
-        },
-      },
-      expressionProperties:{
-        "hideExpression": "!model.farRadio",
-        "templateOptions.required": "model.farRadio",
-      },
-      lifecycle:{
-        onInit: (field, form)=>{
-          this.formService.retrievefardfar().subscribe(res => {
-            let list = []
-            for(var far of res.FAR){
-              list.push(far)
-            }
-            for(var far of res.DFAR){
-              list.push(far)
-            }
-            // console.log(list)
-            form.templateOptions.options = list;
-          });
-        }
-      }
-    };
-    this.fields = [farRadio, farSelect, ...this.fields];
+    // const farSelect=
+    // {
+    //   className: 'custom-input',
+    //   type: "select",
+    //   key: "farSelect",
+    //   templateOptions: {
+    //     label: "Select the exact FAR / DFAR you are searching for:",
+    //     options: [],
+    //     attributes: {
+    //       style: this.options.formState.size
+    //     },
+    //   },
+    //   expressionProperties:{
+    //     "hideExpression": "!model.farRadio",
+    //     "templateOptions.required": "model.farRadio",
+    //   },
+    //   lifecycle:{
+    //     onInit: (field, form)=>{
+    //       this.formService.retrievefardfar().subscribe(res => {
+    //         let list = []
+    //         for(var far of res.FAR){
+    //           list.push(far)
+    //         }
+    //         for(var far of res.DFAR){
+    //           list.push(far)
+    //         }
+    //         form.templateOptions.options = list;
+    //       });
+    //     }
+    //   }
+    // };
+    // this.fields = [farRadio, farSelect, ...this.fields];
 
   }
   
-  onSubmit(){
+  onSearch(){
     let params = this.getParams();
 
+    // this.formService.retrieveResultsV2(params).subscribe(res => {
+    //   console.log(res)
+    //   this.entityList = res;
+    //   if(res.length > 0){
+    //     this.submitClicked = true;
+    //   }
+    // });
      this.formService.retrieveResults(params).subscribe(res => {
        this.entityList = res;
        if(res.length > 0){
