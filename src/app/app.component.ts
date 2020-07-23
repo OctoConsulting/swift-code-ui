@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ResultTableComponent } from './result-table/result-table.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private resultTable : ResultTableComponent) 
+  { }
+
+
   title = 'SwiftCode';
+
+  entityList;
+
+  getEntityList(event){
+    this.entityList = event;
+    this.resultTable.getEntityList(this.entityList);
+  }
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, Injectable} from '@angular/core';
 
 export interface Entity {
   name: string;
@@ -36,13 +36,25 @@ export interface Entity {
 
 // ];
 
-
+@Injectable({providedIn : 'root'})
 @Component({
   selector: 'app-result-table',
   styleUrls: ['result-table.component.css'],
   templateUrl: 'result-table.component.html'
 })
 export class ResultTableComponent {
+
+  entityList;
+  
   displayedColumns: string[] = ['Name', 'DUNS', 'FAR/DFAR Code', 'Answer ID', 'Answer Section'];
-  // dataSource = ELEMENT_DATA;
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  getEntityList(entity : any){
+    this.entityList = entity;
+    console.log(this.entityList);
+  }
 }
