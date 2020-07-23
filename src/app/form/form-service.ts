@@ -21,4 +21,18 @@ export class FormService{
         const url = 'swiftcode/v1/fetch/fardfarlist';
         return this.http.get(url);
     }
+
+    downloadAll(): Observable<Blob>{
+        const url = 'swiftcode/v1/entity-csv';
+        return this.http.get(url, { responseType: 'blob' });
+    }
+
+    downloadDate(date: string): Observable<Blob>{
+        const url = 'swiftcode/v1/entity-csv/date';
+        const params = {
+            date: date
+        }
+        return this.http.get(url, {params: params, responseType: 'blob' });
+    }
+
 }

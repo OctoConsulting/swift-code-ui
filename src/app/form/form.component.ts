@@ -12,7 +12,13 @@ import { map } from 'rxjs/operators';
 })
 export class FormComponent implements OnInit {
   
-  @Output() entityList : EventEmitter<String[]> = new EventEmitter<String[]>();
+  // @Output() entityList : EventEmitter<String[]> = new EventEmitter<String[]>();
+
+  displayedColumns: string[] = ['Name', 'DUNS', 'FAR/DFAR Code', 'Answer ID', 'Answer Section'];
+  entityList;
+  submitClicked;
+  dateClicked = false;
+
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {
@@ -118,33 +124,23 @@ export class FormComponent implements OnInit {
       // }
     ] 
   },
-  // {
-  //   className:"custom-dates",
-  //   key: 'fromDate',
-  //   type: 'input',
-  //   templateOptions: {
-  //     label: 'From Date:',
-  //     type: 'date',
-  //     required: true,
-  //     attributes: {
-  //       style: this.options.formState.size
-  //     }
-  //   },
-  // },
-  // {
-  //   key: 'endDate',
-  //   type: 'input',
-  //   templateOptions: {
-  //     label: 'End Date:',
-  //     type: 'date',
-  //     required: true,
-  //     attributes: {
-  //       style: this.options.formState.size
-  //     }
-  //   },
-  // },
-
-  ]
+  {
+    className:"custom-dates",
+    key: 'date',
+    type: 'input',
+    templateOptions: {
+      label: 'From Date:',
+      description: '    (Required if wanting to download csv for this date)',
+      type: 'date',
+      attributes: {
+        style: this.options.formState.size
+      },
+      change: (form) => {
+        this.dateClicked = true;
+      }
+    } 
+  }
+]
 
   constructor(private formService: FormService) { }
 
@@ -206,14 +202,6 @@ export class FormComponent implements OnInit {
       searchText: '',
       type: ''
     }
-      //------------------------------------------------------- 
-      //TO DO 
-      // case this.model.answerRadio: { 
-      //   params.searchText = this.model.answerInput;
-      //   params.type = '';
-      //   this.formService.retrieveResults(params)
-      //    break; 
-      // } 
       if (this.model.dunsRadio) {
         params.searchText = this.model.dunsInput;
         params.type = 'duns'; 
@@ -224,10 +212,42 @@ export class FormComponent implements OnInit {
         this.formService.retrieveResults(params);
      } 
      this.formService.retrieveResults(params).subscribe(res => {
-      //  console.log(res)
-       this.entityList.emit(res);
-      //  this.convertToEntity(res);
+       this.entityList = res;
+       if(res.length > 0){
+         this.submitClicked = true;
+       }
      });
+  }
+
+  resetClick(){
+    this.submitClicked = false;
+    this.dateClicked = false;
+  }
+
+  downloadClicked(){
+    this.formService.downloadAll().subscribe(res => {
+      let blob = new Blob([res], { type: 'text/csv' });
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = 'ETPHoldReview.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  }
+
+  downloadDateClicked(){
+    this.formService.downloadDate(this.model.date).subscribe(res => {
+      let blob = new Blob([res], { type: 'text/csv' });
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = 'ETPHoldReview.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
   }
 
   // convertToEntity(res: any){

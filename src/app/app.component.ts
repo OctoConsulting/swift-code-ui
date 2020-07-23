@@ -14,10 +14,4 @@ export class AppComponent {
 
   title = 'SwiftCode';
 
-  entityList;
-
-  getEntityList(event){
-    this.entityList = event;
-    this.resultTable.getEntityList(this.entityList);
-  }
 }

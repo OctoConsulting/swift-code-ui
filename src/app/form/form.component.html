@@ -7,10 +7,35 @@
         Submit
     </button>
     
-    <button type="reset">
+    <button type="reset" (click)="resetClick()">
         Reset
     </button>
 
-    <!-- <p>Model</p>
-    {{model | json}} -->
+    <button class="form-button" (click)="downloadClicked()">
+        Download All Entities
+    </button>
+
+    <button class="form-button" (click)="downloadDateClicked()" [disabled]="!dateClicked">
+        Download Entites Based On Date
+    </button>
 </form>
+
+
+<div *ngIf="submitClicked" class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th class="title" *ngFor="let title of displayedColumns"> {{title}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of entityList">
+                <th>{{item.legal_business_name}}</th>
+                <th>{{item.duns}}</th>
+                <th>{{item.far_dfar_code}}</th>
+                <th>{{item.answer_id}}</th>
+                <th>{{item.answer_section}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>

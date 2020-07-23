@@ -44,7 +44,8 @@ export interface Entity {
 })
 export class ResultTableComponent {
 
-  entityList;
+  entityList = [
+    {duns: "188709703", legal_business_name: "Bunes Septic Service, Inc.", far_dfar_code: "FAR 52.204-3", answer_id: "10", links: Array(0)}];
   
   displayedColumns: string[] = ['Name', 'DUNS', 'FAR/DFAR Code', 'Answer ID', 'Answer Section'];
 
