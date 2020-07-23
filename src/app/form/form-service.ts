@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-@Injectable({providedIn : "root"})
+@Injectable({providedIn : 'root'})
 export class FormService{
 
     constructor(private http: HttpClient){
 
     }
 
-    retrieveResults(){
-        const url = '';
-        const params = {
-        };
-
-        return this.http.get(url, params)
+    retrieveResults(params : any): Observable<any>{
+        console.log(params)
+        const options = {
+            params: params
+        }
+        const url = 'swiftcode/v1/entity/get';
+        return this.http.get(url, options);
     }
 }

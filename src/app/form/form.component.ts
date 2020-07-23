@@ -31,7 +31,7 @@ export class FormComponent implements OnInit {
           click: (field) => {
             // this.form.get('dunsRangeRadio').reset(null);
             this.form.get('farRadio').reset(null);
-            this.form.get('answerRadio').reset(null);
+            // this.form.get('answerRadio').reset(null);
           }
         },
       },
@@ -92,7 +92,7 @@ export class FormComponent implements OnInit {
           click: (field) => {
             this.form.get('dunsRadio').reset(null);
             // this.form.get('dunsRangeRadio').reset(null);
-            this.form.get('answerRadio').reset(null);
+            // this.form.get('answerRadio').reset(null);
           }
         },
       },
@@ -117,35 +117,35 @@ export class FormComponent implements OnInit {
         }
       },
 
-      {
-        type: "radio",
-        key: "answerRadio",
-        templateOptions: {
-          options: [
-              {label: "Answer ID", value: 4},
-          ],
-          click: (field) => {
-            this.form.get('dunsRadio').reset(null);
-            // this.form.get('dunsRangeRadio').reset(null);
-            this.form.get('farRadio').reset(null);
-          }
-        },
-      },
-      {
-        className: 'custom-input',
-        type: "input",
-        key: "farInput",
-        templateOptions: {
-          label: "Enter the answer ID you are searching for:",
-          attributes: {
-            style: this.options.formState.size
-          }
-        },
-        expressionProperties:{
-          "hideExpression": "!model.answerRadio",
-          "templateOptions.required": "model.answerRadio"
-        }
-      }
+      // {
+      //   type: "radio",
+      //   key: "answerRadio",
+      //   templateOptions: {
+      //     options: [
+      //         {label: "Answer ID", value: 4},
+      //     ],
+      //     click: (field) => {
+      //       this.form.get('dunsRadio').reset(null);
+      //       // this.form.get('dunsRangeRadio').reset(null);
+      //       this.form.get('farRadio').reset(null);
+      //     }
+      //   },
+      // },
+      // {
+      //   className: 'custom-input',
+      //   type: "input",
+      //   key: "answerInput",
+      //   templateOptions: {
+      //     label: "Enter the answer ID you are searching for:",
+      //     attributes: {
+      //       style: this.options.formState.size
+      //     }
+      //   },
+      //   expressionProperties:{
+      //     "hideExpression": "!model.answerRadio",
+      //     "templateOptions.required": "model.answerRadio"
+      //   }
+      // }
     ] 
   },
   // {
@@ -176,29 +176,38 @@ export class FormComponent implements OnInit {
 
   ]
 
-  constructor(
-    formService: FormService
-  ) { }
+  constructor(private formService: FormService) { }
 
   ngOnInit(): void {
   }
   
   onSubmit(){
     console.log(this.model);
-  //   switch(this.model) { 
-  //     case constant-expression1: { 
-  //        //statements; 
-  //        break; 
-  //     } 
-  //     case constant_expression2: { 
-  //        //statements; 
-  //        break; 
-  //     } 
-  //     default: { 
-  //        //statements; 
-  //        break; 
-  //     } 
-  //  } 
+    let params = 
+    {
+      searchText: '',
+      type: ''
+    }
+      //------------------------------------------------------- 
+      //TO DO 
+      // case this.model.answerRadio: { 
+      //   params.searchText = this.model.answerInput;
+      //   params.type = '';
+      //   this.formService.retrieveResults(params)
+      //    break; 
+      // } 
+      if (this.model.dunsRadio) {
+        params.searchText = this.model.dunsInput;
+        params.type = 'duns'; 
+      } 
+      else if(this.model.farRadio) { 
+        params.searchText = this.model.farSelect;
+        params.type = 'fardfar';
+        this.formService.retrieveResults(params);
+     } 
+     this.formService.retrieveResults(params).subscribe(v => {console.log(v)});
+
+
 
   }
 }
