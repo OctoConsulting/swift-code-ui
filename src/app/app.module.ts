@@ -27,8 +27,7 @@ import { MatTableModule } from '@angular/material/table'
     ReactiveFormsModule,
     FormlyModule.forRoot(),
     FormlyBootstrapModule,
-    MatTableModule
-
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
