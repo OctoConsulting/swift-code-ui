@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-input {
+    display: block;
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-left:40px;
+  }
+
+.custom-dates{
+    margin-left:300px;
+}
